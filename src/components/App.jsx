@@ -13,22 +13,38 @@ export class App extends Component {
     bad: 0
   };
   
-clickOnNeutral  = (e) => { this.setState(prevState => {
-          return { neutral: prevState.neutral + 1 }
-        })}
-
- clickOnGood = (e) => { this.setState(prevState => {
-          return { good: prevState.good + 1 }
- })
-  }
-  clickOnBad = (e) => { this.setState(prevState => {
-          return { bad: prevState.bad + 1 }
-  })
-  }
   
+  options = ['good', 'neutral', 'bad'];
  
+  feedbackSetState = (evt) => {
+    const targetId = evt.currentTarget.id;
+    console.dir(evt.currentTarget)
+    switch (targetId) {
+      case 'good':
+        this.setState(prevState => {
+          return { good: prevState.good + 1 }
+        })
+        break;
+    
+      case 'neutral':
+        this.setState(prevState => {
+          return { neutral: prevState.neutral + 1 }
+        })
+        break;
+      
+      case 'bad':
+        this.setState(prevState => {
+          return { bad: prevState.bad + 1 }
+        })
+        break;
+      default:
+        throw new Error(console.log('Error'));
+       
+    }
+  
+  };
 
-  countTotalFeedback = () => {
+   countTotalFeedback = () => {
     const { good, neutral, bad } = this.state;
     return good + neutral + bad;
   };
@@ -46,7 +62,7 @@ clickOnNeutral  = (e) => { this.setState(prevState => {
       <>
         < GlobalStyles />
         <Section title = {'Please leave feedback'}>
-       <FeedbackOptions onGood={this.clickOnGood} onNeutral={this.clickOnNeutral} onBad={this.clickOnBad} />
+       <FeedbackOptions options = {this.options}  onLeaveFeedback={this.feedbackSetState}/>
         </Section>
        
         <Section title={'Statistics'} >
